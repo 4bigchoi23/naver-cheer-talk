@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "",
+  "description": "",
+  "version": "1.0",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://example.com/*"
+      ],
+      "exclude_matches": [],
+      "js": ["jquery.min.js", "content.js"]
+    }
+  ]
+}
