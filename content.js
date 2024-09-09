@@ -1,4 +1,11 @@
 (function ($, undefined) {
+    window.alert = function(siren) {
+        return function(msg) {
+            siren(msg);
+            $(window).trigger('siren');
+        };
+    }(window.alert);
+
     class LocalStorage {
         constructor(key) {
             this.key = key;
@@ -108,6 +115,11 @@
                     $next.trigger('click');
                 }, 125);
             }
+        }
+    });
+    $(window).on("siren", function() {
+        if (tid) {
+            clearInterval(tid);
         }
     });
     $(document).on('click', '.GameList_list_item__1xUE2', function() {
