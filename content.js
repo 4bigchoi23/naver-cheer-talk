@@ -115,4 +115,9 @@
             clearInterval(tid);
         }
     });
+    $(document).on('focus', '#cbox_module__write_textarea', function() {
+        if (tid) {
+            clearInterval(tid);
+        }
+    });
 })(window.jQuery.noConflict(true));
