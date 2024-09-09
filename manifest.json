@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "",
-  "description": "",
+  "name": "네이버 응원톡",
+  "description": "차단하고 싶은 사용자의 닉네임을 클릭하세요. (토글)",
   "version": "1.0",
   "icons": {
     "16": "icon.png",
@@ -11,7 +11,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://example.com/*"
+        "https://m.sports.naver.com/game/*"
       ],
       "exclude_matches": [],
       "js": ["jquery.min.js", "content.js"]
