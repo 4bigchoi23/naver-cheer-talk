@@ -110,4 +110,9 @@
             }
         }
     });
+    $(document).on('click', '.GameList_list_item__1xUE2', function() {
+        if (tid) {
+            clearInterval(tid);
+        }
+    });
 })(window.jQuery.noConflict(true));
