@@ -92,9 +92,13 @@
         characterData: true
     });
 
+    var tid;
     $(document).on('click', '.CheerVS_emblem__2zXNQ', function() {
         var $this = $(this),
             $next = $this.next();
+        if (tid) {
+            clearInterval(tid);
+        }
         if ($('.u_cbox_type_logged_in').length) {
             if (confirm("해당 팀의 자동 응원을 시작하시겠습니까? \n[확인] 버튼을 누르시면 \n1인당 최대 응원수까지 자동으로 클릭합니다. (1초당 8회)")) {
                 console.clear();
