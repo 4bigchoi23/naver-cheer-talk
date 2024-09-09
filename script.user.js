@@ -11,6 +11,13 @@
 // ==/UserScript==
 
 (function ($, undefined) {
+    window.alert = function(siren) {
+        return function(msg) {
+            siren(msg);
+            $(window).trigger('siren');
+        };
+    }(window.alert);
+
     class LocalStorage {
         constructor(key) {
             this.key = key;
@@ -70,7 +77,7 @@
             storageObj.cat();
         }
     });
-
+    
     $(document).on('click', '.u_cbox_date', function() {
         var $this = $(this),
             $wrap = $this.closest('.u_cbox_comment'),
@@ -104,18 +111,37 @@
         characterData: true
     });
 
+    var tid;
     $(document).on('click', '.CheerVS_emblem__2zXNQ', function() {
         var $this = $(this),
             $next = $this.next();
+        if (tid) {
+            clearInterval(tid);
+        }
         if ($('.u_cbox_type_logged_in').length) {
             if (confirm("해당 팀의 자동 응원을 시작하시겠습니까? \n[확인] 버튼을 누르시면 \n1인당 최대 응원수까지 자동으로 클릭합니다. (1초당 8회)")) {
                 console.clear();
                 console.log(new Date());
                 console.log($next.text().replace(/([^\d,]+)([\d,]+)$/g, '$1 $2'));
-                setInterval(function() {
+                tid = setInterval(function() {
                     $next.trigger('click');
                 }, 125);
             }
+        }
+    });
+    $(window).on("siren", function() {
+        if (tid) {
+            clearInterval(tid);
+        }
+    });
+    $(document).on('click', '.GameList_list_item__1xUE2', function() {
+        if (tid) {
+            clearInterval(tid);
+        }
+    });
+    $(document).on('focus', '#cbox_module__write_textarea', function() {
+        if (tid) {
+            clearInterval(tid);
         }
     });
 })(window.jQuery.noConflict(true));
