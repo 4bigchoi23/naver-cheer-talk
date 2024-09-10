@@ -111,7 +111,7 @@
                 console.clear();
                 console.log(new Date());
                 console.log($next.text().replace(/([^\d,]+)([\d,]+)$/g, '$1 $2'));
-                setInterval(function() {
+                tid = setInterval(function() {
                     $next.trigger('click');
                 }, 125);
             }
