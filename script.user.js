@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         네이버 스포츠
 // @namespace    https://github.com/4bigchoi23
-// @version      1.1
+// @version      1.1.1
 // @description  응원톡 특정 유저 차단
 // @author       Big+ (4bigchoi23@gmail.com)
 // @match        https://m.sports.naver.com/game/*
