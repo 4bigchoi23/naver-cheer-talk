@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         네이버 스포츠
+// @name         네이버 응원톡
 // @namespace    https://github.com/4bigchoi23
 // @version      1.1.1
 // @description  응원톡 특정 유저 차단
@@ -64,7 +64,7 @@
     const storageObj = new LocalStorage(storageKey);
 
     storageObj.cat();
-    
+
     $(document).on('click', '.u_cbox_name', function() {
         var $this = $(this),
             $wrap = $this.closest('.u_cbox_comment'),
@@ -77,13 +77,16 @@
             storageObj.cat();
         }
     });
-    
+
     $(document).on('click', '.u_cbox_date', function() {
         var $this = $(this),
             $wrap = $this.closest('.u_cbox_comment'),
             _info = $wrap.data('info') || '',
-            _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
+            _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1'),
+            _nick = $wrap.find('.u_cbox_nick').text();
 
+        $wrap.data('user', _user);
+        $wrap.data('nick', _nick);
         if (_info) {
             var objectId = _info.replace(/.*objectId\:'([A-Z0-9]+)'.*/, '$1');
             var commentNo = _info.replace(/.*commentNo\:'([0-9]+)'.*/, '$1');
@@ -99,6 +102,9 @@
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.oldValue !== mutation.target.textContent) {
+                if (mutation.target.id === 'wrap') {
+                    $('#wrap').trigger('start');
+                }
                 if (mutation.target.className === 'u_cbox_list' && mutation.removedNodes.length === 0) {
                     $('.u_cbox_date').trigger('click');
                 }
@@ -120,7 +126,6 @@
         }
         if ($('.u_cbox_type_logged_in').length) {
             if (confirm("해당 팀의 자동 응원을 시작하시겠습니까? \n[확인] 버튼을 누르시면 \n1인당 최대 응원수까지 자동으로 클릭합니다. (1초당 8회)")) {
-                console.clear();
                 console.log(new Date());
                 console.log($next.text().replace(/([^\d,]+)([\d,]+)$/g, '$1 $2'));
                 tid = setInterval(function() {
@@ -135,13 +140,9 @@
         }
     });
     $(document).on('click', '.GameList_list_item__1xUE2', function() {
-        if (tid) {
-            clearInterval(tid);
-        }
+        $(window).trigger('siren');
     });
     $(document).on('focus', '#cbox_module__write_textarea', function() {
-        if (tid) {
-            clearInterval(tid);
-        }
+        $(window).trigger('siren');
     });
 })(window.jQuery.noConflict(true));
