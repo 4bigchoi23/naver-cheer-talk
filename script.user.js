@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         네이버 응원톡
 // @namespace    https://github.com/4bigchoi23
-// @version      1.1.2
+// @version      1.2.0
 // @description  응원톡 특정 유저 차단
 // @author       Big+ (4bigchoi23@gmail.com)
 // @match        https://m.sports.naver.com/game/*
@@ -51,11 +51,15 @@
             return;
         }
         cat() {
-            let arr = this.get(this.key);
-            let tmp = arr.map(e => `._user_id_no_${e} .u_cbox_text_wrap`).join(',').concat(arr.length ? ',' : ''); // .u_cbox_text_wrap
-            let str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}.u_cbox_name,.u_cbox_date{cursor:pointer}</style>`;
-            $('#BlockUsers').remove();
-            $('head').append($(str));
+            switch (this.key) {
+                case 'BlockUsers':
+                    let arr = this.get(this.key);
+                    let tmp = arr.map(e => `._user_id_no_${e} .u_cbox_text_wrap`).join(',').concat(arr.length ? ',' : ''); // .u_cbox_text_wrap
+                    let str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}.u_cbox_name,.u_cbox_date{cursor:pointer}</style>`;
+                    $('#BlockUsers').remove();
+                    $('head').append($(str));
+                    break;
+            }
             return;
         }
     }
@@ -66,12 +70,12 @@
     storageObj.cat();
 
     $(document).on('click', '.u_cbox_name', function() {
-        var $this = $(this),
-            $wrap = $this.closest('.u_cbox_comment'),
-            _nick = $this.text(),
-            _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
+        const $this = $(this);
+        const $wrap = $this.closest('.u_cbox_comment');
+        const _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
+        const _nick = $this.text();
 
-        console.log(_nick, _user);
+        console.log(_user, _nick);
         if (_user) {
             storageObj.tog(_user);
             storageObj.cat();
@@ -79,17 +83,17 @@
     });
 
     $(document).on('click', '.u_cbox_date', function() {
-        var $this = $(this),
-            $wrap = $this.closest('.u_cbox_comment'),
-            _info = $wrap.data('info') || '',
-            _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1'),
-            _nick = $wrap.find('.u_cbox_nick').text();
+        const $this = $(this);
+        const $wrap = $this.closest('.u_cbox_comment');
+        const _info = $wrap.data('info') || '';
+        const _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
+        const _nick = $wrap.find('.u_cbox_nick').text();
 
         $wrap.data('user', _user);
         $wrap.data('nick', _nick);
         if (_info) {
-            var objectId = _info.replace(/.*objectId\:'([A-Z0-9]+)'.*/, '$1');
-            var commentNo = _info.replace(/.*commentNo\:'([0-9]+)'.*/, '$1');
+            const objectId = _info.replace(/.*objectId\:'([A-Z0-9]+)'.*/, '$1');
+            const commentNo = _info.replace(/.*commentNo\:'([0-9]+)'.*/, '$1');
             // console.log(objectId, commentNo);
             if ($this.siblings('.u_cbox_work_main').length === 0 && $wrap.find('.u_cbox_delete_contents').length === 0) { 
                 $this.after($(`<a style="margin-left: 0.5em;" class="u_cbox_btn_report" data-action="report#openLayer" data-param="objectId:'${objectId}',commentNo:'${commentNo}'" data-log="RPC.fold"><span class="u_cbox_ico_bar"></span><span class="u_cbox_ico_report"></span><span class="u_cbox_in_report">💩 신고</span></a>`));
@@ -102,8 +106,8 @@
     new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.oldValue !== mutation.target.textContent) {
-                if (mutation.target.id === 'wrap') {
-                    $('#wrap').trigger('start');
+                if (mutation?.addedNodes[0]?.id?.match(/^callback_sportsNoLimitLikeCallBack[\d]+$/)) {
+                    const callback = mutation?.addedNodes[0]?.id?.replace('callback_', '');
                 }
                 if (mutation.target.className === 'u_cbox_list' && mutation.removedNodes.length === 0) {
                     $('.u_cbox_date').trigger('click');
@@ -117,15 +121,23 @@
         characterData: true
     });
 
-    var tid;
+    let tid;
     $(document).on('click', '.CheerVS_emblem__2zXNQ', function() {
-        var $this = $(this),
-            $next = $this.next();
+        const $this = $(this);
+        const $next = $this.next();
         if (tid) {
             clearInterval(tid);
         }
         if ($('.u_cbox_type_logged_in').length) {
-            if (confirm("해당 팀의 자동 응원을 시작하시겠습니까? \n[확인] 버튼을 누르시면 \n1인당 최대 응원수까지 자동으로 클릭합니다. (1초당 8회)")) {
+            let msg = "";
+            msg += "해당 팀의 자동 응원을 시작하시겠습니까? ";
+            msg += "\n";
+            msg += "\n[확인] 버튼을 누르시면 ";
+            msg += "\n1인당 최대 응원수까지 자동으로 클릭합니다. (1초당 8회) ";
+            msg += "\n";
+            msg += "\n1인당 최대 응원수 도달 시 [경고창]이 지속되면 ";
+            msg += "\n[F5] 키를 눌러 페이지를 [새로고침] 하세요!";
+            if (confirm(msg)) {
                 console.log(new Date());
                 console.log($next.text().replace(/([^\d,]+)([\d,]+)$/g, '$1 $2'));
                 tid = setInterval(function() {
@@ -134,7 +146,7 @@
             }
         }
     });
-    $(window).on("siren", function() {
+    $(window).on('siren', function() {
         if (tid) {
             clearInterval(tid);
         }
