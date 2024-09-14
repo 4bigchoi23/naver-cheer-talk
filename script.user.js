@@ -88,9 +88,7 @@
             emblem: `https://sports-phinf.pstatic.net/team/kbo/default/[].png?type=f108_108`,
         },
         kleague: {
-            teams: {
-                kleague: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35'],
-            },
+            teams: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35'],
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_football.png`,
             emblem: `https://sports-phinf.pstatic.net/team/kleague/default/[].png?type=f108_108`,
         },
