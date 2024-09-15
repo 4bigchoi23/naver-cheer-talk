@@ -122,7 +122,7 @@
         const _icon = $icon.attr('src') || '';
 
         const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
-        const division = schedule?.split('/')?.[1];
+        const section = schedule?.split('/')?.[1];
         const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
 
         $wrap.data('user', _user);
@@ -215,9 +215,9 @@
 
     $(document).ready(function() {
         const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
-        const division = schedule?.split('/')?.[1];
+        const section = schedule?.split('/')?.[1];
         const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
-        console.log(division, category);
+        console.log(section, category);
 
         const layer = (e) => {
             return `
