@@ -133,7 +133,7 @@
             const objectId = _info.replace(/.*objectId\:'([A-Z0-9]+)'.*/, '$1');
             const commentNo = _info.replace(/.*commentNo\:'([0-9]+)'.*/, '$1');
             // console.log(objectId, commentNo);
-            if ($this.siblings('.u_cbox_work_main').length === 0 && $wrap.find('.u_cbox_delete_contents').length === 0) { 
+            if ($this.siblings('.u_cbox_work_main').length === 0 && $wrap.find('.u_cbox_delete_contents').length === 0 && $wrap.find('.u_cbox_mine').length === 0) {
                 $this.after($(`<a style="margin-left: 0.5em;" class="u_cbox_btn_report" data-action="report#openLayer" data-param="objectId:'${objectId}',commentNo:'${commentNo}'" data-log="RPC.fold"><span class="u_cbox_ico_bar"></span><span class="u_cbox_ico_report"></span><span class="u_cbox_in_report">💩 신고</span></a>`));
             }
             $this.after($(`<span style="float: left; letter-spacing: 0; font-family: monospace; line-height: 1; color: var(--color-comment-info-base);">${_user}</span>`));
