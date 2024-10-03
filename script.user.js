@@ -118,8 +118,7 @@
         const _info = $wrap.data('info') || '';
         const _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
         const _nick = $wrap.find('.u_cbox_nick').text();
-        const $icon = $wrap.find('.u_cbox_img_contents');
-        const _icon = $icon.attr('src') || '';
+        const _icon = $wrap.find('.u_cbox_img_contents').attr('src') || '';
 
         const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
         const section = schedule?.split('/')?.[1];
@@ -140,6 +139,11 @@
             $this.remove();
         }
 
+        if (leagues?.[category] && $wrap.find('.u_cbox_pic').length === 0) {
+            $wrap.data('icon', leagues?.[category]?.default);
+            $wrap.find('.u_cbox_info').after($(`<div class="u_cbox_pic"><span class="u_cbox_pic_wrap"><img src="${leagues?.[category]?.default}" class="u_cbox_img_contents" alt="댓글 이미지" onerror="cbox.Util.leave(this, '.u_cbox_pic');"><span class="u_cbox_pic_mask"></span></span></div>`));
+        }
+
         let image;
         const regex = new RegExp(`${_user}\\|${category}\\|[A-Za-z0-9]+$`);
         const match = fanaticObj.get().filter(e => e.match(regex))?.[0]?.split('|')?.[2];
@@ -147,7 +151,7 @@
             image = leagues[category]?.emblem?.replace('[]', match);
             if (image) {
                 // console.log(_user, match, image);
-                $icon.attr('src', image);
+                $wrap.find('.u_cbox_img_contents').attr('src', image);
                 $wrap.find('.u_cbox_nick').css('color', 'var(--color-comment-point2)');
             }
         }
@@ -160,7 +164,10 @@
                     const callback = mutation?.addedNodes[0]?.id?.replace('callback_', '');
                 }
                 if (mutation.target.className === 'u_cbox') {
-                    if ($('.u_cbox_comment .u_cbox_pic').length) {
+                    const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
+                    const section = schedule?.split('/')?.[1];
+                    const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
+                    if (leagues?.[category]) {
                         $('.u_cbox_wrap').addClass('u_cbox_type_select');
                     }
                 }
