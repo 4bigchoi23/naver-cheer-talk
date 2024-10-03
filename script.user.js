@@ -97,6 +97,21 @@
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_basketball.png`,
             emblem: `https://sports-phinf.pstatic.net/team/kbl/default/[].png?type=f108_108`,
         },
+        wkbl: {
+            teams: ['05', '11', '03', '07', '01', '09'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_basketball.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/wkbl/default/[].png?type=f108_108`,
+        },
+        kovo: {
+            teams: ['1001', '1009', '1008', '1005', '1006', '1002', '1004'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_volleyball.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/kovo/default/[].png?type=f108_108`,
+        },
+        wkovo: {
+            teams: ['2001', '2004', '2003', '2005', '2006', '2002', '2007'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_volleyball.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/wkovo/default/[].png?type=f108_108`,
+        },
     };
 
     $(document).on('click', '.u_cbox_name', function() {
