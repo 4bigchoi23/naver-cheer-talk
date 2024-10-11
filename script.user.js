@@ -373,4 +373,84 @@
             $team.find('.close').trigger('click');
         });
     });
+
+    const SprayEmoji = JSON.parse(localStorage.getItem('SprayEmoji'));
+    const emoji = [
+        ...`✨🎉🏅💊💎🚨🛟🍄🍿💡`,
+        ...`💰🌷🐵💗🥎💝😁🐋🐣👀`,
+        ...`👍🙏🎈🎃🎁🎪🐸💍💋🤿`,
+        ...`🎲🥊🎴👽🎸💣👉🥰📷🦞`,
+        ...`⏰🍕🍧🎂🍵🍷🍺🍋🍒🚑`,
+        ...`🛫😽⭐🛸🌟🍗💥💖👻🐱`,
+        ...`🚩🌱🪴🌿🤩🥕🐯🐦🍼🍌`,
+        ...`🤖🐼🐞🎠🎨🥽🏆🍕🧀🧁`,
+        ...`🧊🍆🍎🚧🌛🔥🦄🧪🌵😎`,
+        ...`🫵🫶🩹🔫⌛🥪🍩🍹🥝🌰`,
+    ];
+    const quota = (n) => Math.floor(Math.random() * ((n > 1 ? n : 3) - 1 + 1) + 1);
+    const spray = (n) => {
+        let str = ``;
+        let num = n > 1 ? n : 1;
+        for (let i=0; i<num; i++) {
+            if (Math.floor(Math.random() * i) !== 0) break;
+            str += emoji[Math.floor(Math.random() * emoji.length)];
+        }
+        return str;
+    };
+    $(document).on('change', '#SprayEmoji input:checkbox', function() {
+        localStorage.setItem('SprayEmoji', $(this).is(':checked'));
+        $('#cbox_module__write_textarea').focus();
+    });
+    $(document).on('focus', '#cbox_module__write_textarea', function(e) {
+        const $this = $(this);
+        const $wrap = $this.closest('fieldset');
+        const value = $this.val();
+        const state = SprayEmoji ? 'checked' : '';
+        const setup = `
+            <style>
+                #SprayEmoji {
+                    margin: 5px 0 10px 0;
+                    font-size: 13px;
+                }
+                #SprayEmoji input[type="checkbox"] {
+                    accent-color: var(--color-comment-point2);
+                }
+                #SprayEmoji input[type="checkbox"] + * {
+                    color: var(--color-comment-info-base);
+                }
+                #SprayEmoji input[type="checkbox"]:checked + * {
+                    color: var(--color-comment-point2);
+                }
+            </style>
+            <div id="SprayEmoji">
+                <label>
+                    <input type="checkbox" ${state} />&nbsp; 
+                    <span>응원글 작성 시 이모지 자동 삽입</span>
+                </label>
+            </div>
+        `;
+        if ($('#SprayEmoji').length === 0) {
+            $wrap.find('.u_cbox_profile').after($(setup));
+        }
+    });
+    $(document).on('keyup', '#cbox_module__write_textarea', function(e) {
+        const $this = $(this);
+        const value = $this.val();
+        const selectionStart = $this.prop('selectionStart');
+        const selectionEnd = $this.prop('selectionEnd');
+        const prevValue = value.substring(0, selectionStart);
+        const nextValue = value.substring(selectionEnd, value.length);
+        let key = e.keyCode || e.which;
+        const m = /Android|iPhone|iPad|BlackBerry/i;
+        if (navigator.userAgent.match(m) && key === 229) {
+            key = e.target.value.charAt(e.target.selectionStart - 1).charCodeAt();
+        }
+        if ($('#SprayEmoji input:checkbox').is(':checked') && key === 32) {
+            if (Math.floor(Math.random() * 3) !== 0) {
+                const inlay = spray(quota());
+                $this.val(`${prevValue}${inlay} ${nextValue}`);
+                $this.prop('selectionEnd', selectionEnd + inlay.length + 1);
+            }
+        }
+    });
 })(window.jQuery.noConflict(true));
