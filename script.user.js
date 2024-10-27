@@ -459,4 +459,36 @@
             }
         }
     });
+
+    $(document).ready(function() {
+        $('head').append($(`
+            <style>
+                .u_cbox .u_cbox_list {
+                    overflow-y: scroll !important;
+                    padding: 0 16px 0 24px !important;
+                }
+                .u_cbox .u_cbox_area {
+                    width: 100%;
+                }
+                .u_cbox .u_cbox_comment .u_cbox_comment_box {
+                    margin-right: 0 !important;
+                }
+                .u_cbox .u_cbox_sticker_wrap* {
+                    display: none !important; 
+                    padding: 0 !important;
+                }
+                .u_cbox_comment._kbo_HT .u_cbox_nick {--color-comment-point2: #ff6275;}
+                .u_cbox_comment._kbo_HT .u_cbox_nick* {--color-comment-point2: #A32525;}
+                .u_cbox_comment._kbo_WO .u_cbox_nick* {--color-comment-point2: #6C1126;}
+                .u_cbox_comment._kbo_SK .u_cbox_nick* {--color-comment-point2: #B42C4D;}
+                .u_cbox_comment._kbo_LT .u_cbox_nick* {--color-comment-point2: #082C5A;}
+                .u_cbox_comment._kbo_OB .u_cbox_nick* {--color-comment-point2: #131230;}
+                .u_cbox_comment._kbo_KT .u_cbox_nick* {--color-comment-point2: #231f20;}
+                .u_cbox_comment._kbo_NC .u_cbox_nick* {--color-comment-point2: #1d467d;}
+                .u_cbox_comment._kbo_SS .u_cbox_nick* {--color-comment-point2: #0472C4;}
+                .u_cbox_comment._kbo_HH .u_cbox_nick* {--color-comment-point2: #ED7C3D;}
+                .u_cbox_comment._kbo_LG .u_cbox_nick* {--color-comment-point2: #C63751;}
+            </style>
+        `));
+    });
 })(window.jQuery.noConflict(true));
