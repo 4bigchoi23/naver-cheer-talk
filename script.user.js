@@ -166,6 +166,7 @@
             image = leagues[category]?.emblem?.replace('[]', match);
             if (image) {
                 // console.log(_user, match, image);
+                $wrap.addClass(`_${category}_${match}`);
                 $wrap.find('.u_cbox_img_contents').attr('src', image);
                 $wrap.find('.u_cbox_nick').css('color', 'var(--color-comment-point2)');
             }
@@ -360,11 +361,16 @@
             const _user = $team.data('user');
             const _nick = $team.data('nick');
             const _icon = $team.data('icon');
-            const $that = $(`.u_cbox_comment._user_id_no_${_user} .u_cbox_img_contents`);
+            const $wrap = $(`.u_cbox_comment._user_id_no_${_user}`);
             // console.log(_team || '[]', _user, _nick, _icon);
             if (_user && _icon) {
-                $that.attr('src', _team ? $this.attr('src') : _icon);
-                $that.closest('.u_cbox_comment').find('.u_cbox_nick').css('color', _team ? 'var(--color-comment-point2)' : '');
+                $wrap.removeClass(function (index, className) {
+                    let reg = new RegExp(String.raw`(^|\s)_${category}_\S+`, 'g');
+                    return (className.match(reg) || []).join(' ');
+                });
+                $wrap.addClass(_team ? `_${category}_${_team}` : ``);
+                $wrap.find('.u_cbox_img_contents').attr('src', _team ? $this.attr('src') : _icon);
+                $wrap.find('.u_cbox_nick').css('color', _team ? 'var(--color-comment-point2)' : '');
                 fanaticObj.del(`${_user}|${category}|`, 0);
                 if (_team) {
                     fanaticObj.set(`${_user}|${category}|${_team}`);
