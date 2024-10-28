@@ -88,7 +88,12 @@
             emblem: `https://sports-phinf.pstatic.net/team/kbo/default/[].png?type=f108_108`,
         },
         kleague: {
-            teams: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35'],
+            teams: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35', '06', '36', '20', '26', '27', '07', '37', '08', '34', '31', '32', '38', '02'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_football.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/kleague/default/[].png?type=f108_108`,
+        },
+        kleague2: {
+            teams: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35', '06', '36', '20', '26', '27', '07', '37', '08', '34', '31', '32', '38', '02'],
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_football.png`,
             emblem: `https://sports-phinf.pstatic.net/team/kleague/default/[].png?type=f108_108`,
         },
@@ -137,7 +142,7 @@
 
         const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
         const section = schedule?.split('/')?.[1];
-        const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
+        const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
 
         $wrap.data('user', _user);
         $wrap.data('nick', _nick);
@@ -182,7 +187,7 @@
                 if (mutation.target.className === 'u_cbox') {
                     const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
                     const section = schedule?.split('/')?.[1];
-                    const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
+                    const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
                     if (leagues?.[category]) {
                         $('.u_cbox_wrap').addClass('u_cbox_type_select');
                     }
@@ -239,7 +244,7 @@
     $(document).ready(function() {
         const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
         const section = schedule?.split('/')?.[1];
-        const category = schedule?.replace(/.*\?category=([a-z]+)(&.*)?/, '$1');
+        const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
         console.log(section, category);
 
         const layer = (e) => {
