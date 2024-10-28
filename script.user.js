@@ -463,9 +463,11 @@
     $(document).ready(function() {
         $('head').append($(`
             <style>
-                .u_cbox .u_cbox_list {
-                    overflow-y: scroll !important;
-                    padding: 0 16px 0 24px !important;
+                @media (min-width: 1024px) {
+                    .u_cbox .u_cbox_list {
+                        overflow-y: scroll !important;
+                        padding: 0 16px 0 24px !important;
+                    }
                 }
                 .u_cbox .u_cbox_area {
                     width: 100%;
