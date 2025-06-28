@@ -62,7 +62,7 @@
                 case 'BlockUsers':
                     let arr = this.get(this.key);
                     let tmp = arr.map(e => `._user_id_no_${e} .u_cbox_text_wrap`).join(',').concat(arr.length ? ',' : ''); // .u_cbox_text_wrap
-                    let str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}.u_cbox_name,.u_cbox_date{cursor:pointer}</style>`;
+                    let str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}</style>`;
                     $('#BlockUsers').remove();
                     $('head').append($(str));
                     break;
@@ -124,7 +124,7 @@
         },
     };
 
-    $(document).on('click', '.u_cbox_name', function() {
+    $(document).on('click', '.u_cbox_cheer .u_cbox_name', function() {
         const $this = $(this);
         const $wrap = $this.closest('.u_cbox_comment');
         const _user = $wrap.attr('class').replace(/.*_user_id_no_([A-Za-z0-9]+).*/g, '$1');
@@ -137,7 +137,7 @@
         }
     });
 
-    $(document).on('click', '.u_cbox_date', function() {
+    $(document).on('click', '.u_cbox_cheer .u_cbox_date', function() {
         const $this = $(this);
         const $wrap = $this.closest('.u_cbox_comment');
         const _info = $wrap.data('info') || '';
@@ -160,7 +160,7 @@
             if ($this.siblings('.u_cbox_work_main').length === 0 && $wrap.find('.u_cbox_delete_contents').length === 0 && $wrap.find('.u_cbox_mine').length === 0) {
                 $this.after($(`<span class="u_cbox_work_main"><a class="u_cbox_btn_report" data-action="report#openLayer" data-param="objectId:'${objectId}',commentNo:'${commentNo}'" data-log="RPC.fold"><span class="u_cbox_ico_bar"></span><span class="u_cbox_ico_report"></span><span class="u_cbox_in_report">신고</span></a></span>`));
             }
-            $this.after($(`<span style="float: left; letter-spacing: 0; font-family: monospace; font-size: 13px; line-height: 1; color: var(--color-comment-info-base);">${_user}</span>`));
+            $this.after($(`<span style="float: left; letter-spacing: 0; font-family: monospace; font-size: 14px; line-height: 1; color: var(--color-comment-info-base);">${_user}</span>`));
             $this.remove();
         }
 
@@ -194,11 +194,11 @@
                     const section = schedule?.split('/')?.[1];
                     const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
                     if (leagues?.[category]) {
-                        $('.u_cbox_wrap').addClass('u_cbox_type_select');
+                        $('.u_cbox_cheer .u_cbox_wrap').addClass('u_cbox_type_select');
                     }
                 }
                 if (mutation.target.className === 'u_cbox_list' && mutation.removedNodes.length === 0) {
-                    $('.u_cbox_date').trigger('click');
+                    $('.u_cbox_cheer .u_cbox_date').trigger('click');
                 }
             }
         });
@@ -210,7 +210,7 @@
     });
 
     let tid;
-    $(document).on('click', '.CheerVS_emblem__2zXNQ', function() {
+    $(document).on('mousedown', '.CheerVS_emblem__2zXNQ', function() {
         const $this = $(this);
         const $next = $this.next();
         if (tid) {
@@ -242,8 +242,53 @@
     $(document).on('click', '.GameList_list_item__1xUE2', function() {
         $(window).trigger('siren');
     });
-    $(document).on('focus', '#cbox_module__write_textarea', function() {
+    $(document).on('focus', '#cbox_module_cheer__write_textarea', function() {
         $(window).trigger('siren');
+    });
+
+    $(document).ready(function() {
+        $('head').append($(`
+            <style>
+                .u_cbox_cheer .u_cbox_name,
+                .u_cbox_cheer .u_cbox_date {
+                    cursor:pointer;
+                }
+                .CheerVS_emblem__2zXNQ {
+                    pointer-events: auto !important;
+                    position: relative;
+                    z-index: 99;
+                }
+                @media (min-width: 1024px) {
+                    .u_cbox_cheer .u_cbox .u_cbox_list {
+                        overflow-y: scroll !important;
+                        padding: 0 16px 0 24px !important;
+                    }
+                }
+                .u_cbox_cheer .u_cbox .u_cbox_area {
+                    width: 100%;
+                }
+                .u_cbox_cheer .u_cbox .u_cbox_comment .u_cbox_comment_box {
+                    margin-left: 0 !important;
+                    margin-right: 0 !important;
+                }
+                .u_cbox_cheer .u_cbox .u_cbox_sticker_wrap* {
+                    display: none !important; 
+                    padding: 0 !important;
+                }
+                .u_cbox_comment._kbo_HT .u_cbox_nick {--color-comment-point2: #ff6275;}
+                .u_cbox_comment._kbo_HT .u_cbox_nick* {--color-comment-point2: #A32525;}
+                .u_cbox_comment._kbo_WO .u_cbox_nick* {--color-comment-point2: #6C1126;}
+                .u_cbox_comment._kbo_SK .u_cbox_nick* {--color-comment-point2: #B42C4D;}
+                .u_cbox_comment._kbo_LT .u_cbox_nick* {--color-comment-point2: #082C5A;}
+                .u_cbox_comment._kbo_OB .u_cbox_nick* {--color-comment-point2: #131230;}
+                .u_cbox_comment._kbo_KT .u_cbox_nick* {--color-comment-point2: #231f20;}
+                .u_cbox_comment._kbo_NC .u_cbox_nick* {--color-comment-point2: #1d467d;}
+                .u_cbox_comment._kbo_SS .u_cbox_nick* {--color-comment-point2: #0472C4;}
+                .u_cbox_comment._kbo_HH .u_cbox_nick* {--color-comment-point2: #ED7C3D;}
+                .u_cbox_comment._kbo_LG .u_cbox_nick* {--color-comment-point2: #C63751;}
+                .u_cbox_sticker_wrap {
+            </style>
+        `));
     });
 
     $(document).ready(function() {
@@ -255,7 +300,7 @@
         const layer = (e) => {
             return `
                 <style>
-                    .u_cbox_pic {
+                    .u_cbox_cheer .u_cbox_pic {
                         cursor: pointer;
                     }
                     #teams-layer {
@@ -415,9 +460,9 @@
     };
     $(document).on('change', '#SprayEmoji input:checkbox', function() {
         localStorage.setItem('SprayEmoji', $(this).is(':checked'));
-        $('#cbox_module__write_textarea').focus();
+        $('#cbox_module_cheer__write_textarea').focus();
     });
-    $(document).on('focus', '#cbox_module__write_textarea', function(e) {
+    $(document).on('focus', '#cbox_module_cheer__write_textarea', function(e) {
         const $this = $(this);
         const $wrap = $this.closest('fieldset');
         const value = $this.val();
@@ -449,7 +494,7 @@
             $wrap.find('.u_cbox_profile').after($(setup));
         }
     });
-    $(document).on('keyup', '#cbox_module__write_textarea', function(e) {
+    $(document).on('keyup', '#cbox_module_cheer__write_textarea', function(e) {
         const $this = $(this);
         const value = $this.val();
         const selectionStart = $this.prop('selectionStart');
@@ -468,39 +513,5 @@
                 $this.prop('selectionEnd', selectionEnd + inlay.length + 1);
             }
         }
-    });
-
-    $(document).ready(function() {
-        $('head').append($(`
-            <style>
-                @media (min-width: 1024px) {
-                    .u_cbox .u_cbox_list {
-                        overflow-y: scroll !important;
-                        padding: 0 16px 0 24px !important;
-                    }
-                }
-                .u_cbox .u_cbox_area {
-                    width: 100%;
-                }
-                .u_cbox .u_cbox_comment .u_cbox_comment_box {
-                    margin-right: 0 !important;
-                }
-                .u_cbox .u_cbox_sticker_wrap* {
-                    display: none !important; 
-                    padding: 0 !important;
-                }
-                .u_cbox_comment._kbo_HT .u_cbox_nick {--color-comment-point2: #ff6275;}
-                .u_cbox_comment._kbo_HT .u_cbox_nick* {--color-comment-point2: #A32525;}
-                .u_cbox_comment._kbo_WO .u_cbox_nick* {--color-comment-point2: #6C1126;}
-                .u_cbox_comment._kbo_SK .u_cbox_nick* {--color-comment-point2: #B42C4D;}
-                .u_cbox_comment._kbo_LT .u_cbox_nick* {--color-comment-point2: #082C5A;}
-                .u_cbox_comment._kbo_OB .u_cbox_nick* {--color-comment-point2: #131230;}
-                .u_cbox_comment._kbo_KT .u_cbox_nick* {--color-comment-point2: #231f20;}
-                .u_cbox_comment._kbo_NC .u_cbox_nick* {--color-comment-point2: #1d467d;}
-                .u_cbox_comment._kbo_SS .u_cbox_nick* {--color-comment-point2: #0472C4;}
-                .u_cbox_comment._kbo_HH .u_cbox_nick* {--color-comment-point2: #ED7C3D;}
-                .u_cbox_comment._kbo_LG .u_cbox_nick* {--color-comment-point2: #C63751;}
-            </style>
-        `));
     });
 })(window.jQuery.noConflict(true));
