@@ -87,6 +87,11 @@
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_baseball.png`,
             emblem: `https://sports-phinf.pstatic.net/team/kbo/default/[].png?type=f108_108`,
         },
+        mlb: {
+            teams: ['AT', 'BA', 'LA', 'MI', 'TE', 'HO', 'MN', 'TB', 'PH', 'AZ', 'CC', 'DE', 'TO', 'SE', 'FL', 'CI', 'SD', 'CL', 'NY', 'SF', 'PI', 'NM', 'AN', 'CW', 'BO', 'SL', 'MO', 'CO', 'KC', 'OA'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_baseball.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/mlb/default/[].png?type=f108_108`,
+        },
         kleague: {
             teams: ['01', '03', '04', '05', '09', '10', '17', '18', '21', '22', '29', '35', '06', '36', '20', '26', '27', '07', '37', '08', '34', '31', '32', '38', '02'],
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_football.png`,
