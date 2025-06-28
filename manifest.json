@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "네이버 응원톡",
   "description": "차단하고 싶은 사용자의 닉네임을 클릭하세요. (토글)",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "icons": {
     "16": "icon.png",
     "32": "icon.png",
