@@ -117,6 +117,11 @@
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_basketball.png`,
             emblem: `https://sports-phinf.pstatic.net/team/wkbl/default/[].png?type=f108_108`,
         },
+        nba: {
+            teams: ['OKC', 'CLE', 'HOU', 'BOS', 'NY', 'LAL', 'DEN', 'IND', 'LAC', 'MIL', 'DET', 'MIN', 'GS', 'ORL', 'MEM', 'ATL', 'CHI', 'SAC', 'MIA', 'DAL', 'TOR', 'PHO', 'POR', 'BKN', 'PHI', 'SA', 'NO', 'CHA', 'UTA', 'WAS'],
+            default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_basketball.png`,
+            emblem: `https://sports-phinf.pstatic.net/team/nba/default/[].png?type=f108_108`,
+        },
         kovo: {
             teams: ['1001', '1009', '1008', '1005', '1006', '1002', '1004'],
             default: `https://ssl.pstatic.net/static/sports/2021/m/12/07/no_emblem_volleyball.png`,
