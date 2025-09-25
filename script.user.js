@@ -188,7 +188,7 @@
                 // console.log(_user, match, image);
                 $wrap.addClass(`_${category}_${match}`);
                 $wrap.find('.u_cbox_img_contents').attr('src', image);
-                $wrap.find('.u_cbox_nick').css('color', 'var(--color-comment-point2)');
+                $wrap.find('.u_cbox_nick').css('color', 'var(--color-comment-point2) !important');
             }
         }
     });
@@ -434,7 +434,7 @@
                 });
                 $wrap.addClass(_team ? `_${category}_${_team}` : ``);
                 $wrap.find('.u_cbox_img_contents').attr('src', _team ? $this.attr('src') : _icon);
-                $wrap.find('.u_cbox_nick').css('color', _team ? 'var(--color-comment-point2)' : '');
+                $wrap.find('.u_cbox_nick').css('color', _team ? 'var(--color-comment-point2) !important' : '');
                 fanaticObj.del(`${_user}|${category}|`, 0);
                 if (_team) {
                     fanaticObj.set(`${_user}|${category}|${_team}`);
