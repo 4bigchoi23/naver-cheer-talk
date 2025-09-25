@@ -145,7 +145,7 @@
         const _nick = $wrap.find('.u_cbox_nick').text();
         const _icon = $wrap.find('.u_cbox_img_contents').attr('src') || '';
 
-        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
+        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
         const section = schedule?.split('/')?.[1];
         const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
 
@@ -190,7 +190,7 @@
                     const callback = mutation?.addedNodes[0]?.id?.replace('callback_', '');
                 }
                 if (mutation.target.className === 'u_cbox') {
-                    const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
+                    const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
                     const section = schedule?.split('/')?.[1];
                     const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
                     if (leagues?.[category]) {
@@ -292,7 +292,7 @@
     });
 
     $(document).ready(function() {
-        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href').trim();
+        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
         const section = schedule?.split('/')?.[1];
         const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
         console.log(section, category);
