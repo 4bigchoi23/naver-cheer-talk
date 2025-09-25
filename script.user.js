@@ -286,7 +286,6 @@
                 .u_cbox_comment._kbo_SS .u_cbox_nick* {--color-comment-point2: #0472C4;}
                 .u_cbox_comment._kbo_HH .u_cbox_nick* {--color-comment-point2: #ED7C3D;}
                 .u_cbox_comment._kbo_LG .u_cbox_nick* {--color-comment-point2: #C63751;}
-                .u_cbox_sticker_wrap {
             </style>
         `));
     });
