@@ -134,6 +134,46 @@
         },
     };
 
+    const game = window.location.href?.split('/')?.[4];
+
+    function getSports() {
+        let section, category, tmp;
+        switch (true) {
+            case /^[0-9]{8}[A-Z]{4}[0][0-9]{4}$/.test(game):
+                section = 'kbaseball', category = 'kbo';
+                break;
+            case /^[0-9]{8}[A-Z]{4}[0]$/.test(game):
+                section = 'wbaseball';
+                tmp = [game?.slice(8,10), game?.slice(10,12)];
+                if (leagues?.mlb?.teams?.includes(tmp[0]) && leagues?.mlb?.teams?.includes(tmp[1])) {
+                    category = 'mlb';
+                }
+                if (leagues?.npb?.teams?.includes(tmp[0]) && leagues?.npb?.teams?.includes(tmp[1])) {
+                    category = 'npb';
+                }
+                break;
+            case /^[0-9]{15}$/.test(game):
+                section = 'kfootball', category = 'kleague';
+                break;
+            case /^[0-9]{8}[0-9]{9}$/.test(game):
+                section = 'basketball', category = 'kbl';
+                break;
+            case /^[0-9]{8}[0-9]{6}$/.test(game):
+                section = 'basketball', category = 'wkbl';
+                break;
+            case /^[0-9]{8}[0-9]{2}$/.test(game):
+                section = 'basketball', category = 'nba';
+                break;
+            case /^[0-9]{8}[0-9]{3}M[0-9]{1,3}$/.test(game):
+                section = 'volleyball', category = 'kovo';
+                break;
+            case /^[0-9]{8}[0-9]{3}F[0-9]{1,3}$/.test(game):
+                section = 'volleyball', category = 'wkovo';
+                break;
+        }
+        return [section, category];
+    }
+
     $(document).on('click', '.u_cbox_cheer .u_cbox_name', function() {
         const $this = $(this);
         const $wrap = $this.closest('.u_cbox_comment');
@@ -155,9 +195,10 @@
         const _nick = $wrap.find('.u_cbox_nick').text();
         const _icon = $wrap.find('.u_cbox_img_contents').attr('src') || '';
 
-        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
-        const section = schedule?.split('/')?.[1];
-        const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+        // const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
+        // const section = schedule?.split('/')?.[1];
+        // const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+        const [section, category] = getSports();
 
         $wrap.data('user', _user);
         $wrap.data('nick', _nick);
@@ -200,9 +241,10 @@
                     const callback = mutation?.addedNodes[0]?.id?.replace('callback_', '');
                 }
                 if (mutation.target.className === 'u_cbox') {
-                    const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
-                    const section = schedule?.split('/')?.[1];
-                    const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+                    // const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
+                    // const section = schedule?.split('/')?.[1];
+                    // const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+                    const [section, category] = getSports();
                     if (leagues?.[category]) {
                         $('.u_cbox_cheer .u_cbox_wrap').addClass('u_cbox_type_select');
                     }
@@ -301,9 +343,10 @@
     });
 
     $(document).ready(function() {
-        const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
-        const section = schedule?.split('/')?.[1];
-        const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+        // const schedule = $('[aria-describedby="wa_tooltip_message_schedule"]').attr('href');
+        // const section = schedule?.split('/')?.[1];
+        // const category = schedule?.replace(/.*\?category=([A-Za-z0-9]+)(&.*)?/, '$1');
+        const [section, category] = getSports();
         console.log(section, category);
 
         const layer = (e) => {
