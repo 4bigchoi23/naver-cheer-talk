@@ -554,13 +554,36 @@
             $wrap.find('.u_cbox_profile').after($(setup));
         }
     });
+    function getCaretPosition(editableDiv) {
+        let caretOffset = 0;
+        const sel = window.getSelection();
+        if (sel.rangeCount > 0) {
+            const range = sel.getRangeAt(0);
+            const preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(editableDiv);
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+            caretOffset = preCaretRange.toString().length;
+        }
+        return caretOffset;
+    }
+    function setCaretPosition(editableDiv, pos) {
+        const contentEditableDiv = editableDiv;
+        const range = document.createRange();
+        const selection = window.getSelection();
+        if (contentEditableDiv.firstChild && contentEditableDiv.firstChild.nodeType === Node.TEXT_NODE) {
+            range.setStart(contentEditableDiv.firstChild, pos ?? 0);
+            range.collapse(true);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            contentEditableDiv.focus();
+        }
+    }
     $(document).on('keyup', '#cbox_module_cheer__write_textarea', function(e) {
         const $this = $(this);
-        const value = $this.val();
-        const selectionStart = $this.prop('selectionStart');
-        const selectionEnd = $this.prop('selectionEnd');
-        const prevValue = value.substring(0, selectionStart);
-        const nextValue = value.substring(selectionEnd, value.length);
+        const value = $this.text();
+        const caretPosition = getCaretPosition(e.target);
+        const prevValue = value.substring(0, caretPosition);
+        const nextValue = value.substring(caretPosition, value.length);
         let key = e.keyCode || e.which;
         const m = /Android|iPhone|iPad|BlackBerry/i;
         if (navigator.userAgent.match(m) && key === 229) {
@@ -569,8 +592,8 @@
         if ($('#SprayEmoji input:checkbox').is(':checked') && key === 32) {
             if (Math.floor(Math.random() * 3) !== 0) {
                 const inlay = spray(quota());
-                $this.val(`${prevValue}${inlay} ${nextValue}`);
-                $this.prop('selectionEnd', selectionEnd + inlay.length + 1);
+                e.target.innerText = `${prevValue}${inlay} ${nextValue}`;
+                setCaretPosition(e.target, caretPosition + inlay.length + 1);
             }
         }
     });
