@@ -58,11 +58,12 @@
             return;
         }
         cat() {
+            let arr, tmp, str;
             switch (this.key) {
                 case 'BlockUsers':
-                    let arr = this.get(this.key);
-                    let tmp = arr.map(e => `._user_id_no_${e} .u_cbox_text_wrap`).join(',').concat(arr.length ? ',' : ''); // .u_cbox_text_wrap
-                    let str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}</style>`;
+                    arr = this.get(this.key);
+                    tmp = arr.map(e => `._user_id_no_${e} .u_cbox_text_wrap`).join(',').concat(arr.length ? ',' : ''); // .u_cbox_text_wrap
+                    str = `<style id="BlockUsers">${tmp}._user_id_no_{display:none}</style>`;
                     $('#BlockUsers').remove();
                     $('head').append($(str));
                     break;
