@@ -140,7 +140,7 @@
     function getSports() {
         let section, category, tmp;
         switch (true) {
-            case /^[0-9]{8}[A-Z]{4}[0][0-9]{4}$/.test(game):
+            case /^(20[0-9]{2}|[4]{4}|[3]{4}|[5]{4}|[7]{4})[0-9]{4}[A-Z]{4}[0][0-9]{4}$/.test(game):
                 section = 'kbaseball';
                 category = 'kbo';
                 break;
