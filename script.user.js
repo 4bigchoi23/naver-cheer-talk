@@ -141,7 +141,8 @@
         let section, category, tmp;
         switch (true) {
             case /^[0-9]{8}[A-Z]{4}[0][0-9]{4}$/.test(game):
-                section = 'kbaseball', category = 'kbo';
+                section = 'kbaseball';
+                category = 'kbo';
                 break;
             case /^[0-9]{8}[A-Z]{4}[0]$/.test(game):
                 section = 'wbaseball';
@@ -154,22 +155,28 @@
                 }
                 break;
             case /^[0-9]{15}$/.test(game):
-                section = 'kfootball', category = 'kleague';
+                section = 'kfootball';
+                category = 'kleague';
                 break;
             case /^[0-9]{8}[0-9]{9}$/.test(game):
-                section = 'basketball', category = 'kbl';
+                section = 'basketball';
+                category = 'kbl';
                 break;
             case /^[0-9]{8}[0-9]{6}$/.test(game):
-                section = 'basketball', category = 'wkbl';
+                section = 'basketball';
+                category = 'wkbl';
                 break;
             case /^[0-9]{8}[0-9]{2}$/.test(game):
-                section = 'basketball', category = 'nba';
+                section = 'basketball';
+                category = 'nba';
                 break;
             case /^[0-9]{8}[0-9]{3}M[0-9]{1,3}$/.test(game):
-                section = 'volleyball', category = 'kovo';
+                section = 'volleyball';
+                category = 'kovo';
                 break;
             case /^[0-9]{8}[0-9]{3}F[0-9]{1,3}$/.test(game):
-                section = 'volleyball', category = 'wkovo';
+                section = 'volleyball';
+                category = 'wkovo';
                 break;
         }
         return [section, category];
